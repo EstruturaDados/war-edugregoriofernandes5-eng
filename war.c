@@ -96,3 +96,11 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+Criaçao da struct territorio com suas informações de descrição;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_TERRITORIOS 5
+#define MAX_NOME 30
+#define MAX_COR 20
