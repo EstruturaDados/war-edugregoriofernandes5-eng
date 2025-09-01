@@ -103,4 +103,18 @@ Criaçao da struct territorio com suas informações de descrição;
 
 #define MAX_TERRITORIOS 5
 #define MAX_NOME 30
-#define MAX_COR 20
+#define MAX_COR 20 
+
+//Estrutura Territorio
+typedef struct {
+    char nome [MAX_NOME];  //Nome do território
+    char corExercito [MAX_COR];  //Cor do exercito que ocupa
+    int tropas; //Quantidade de tropas
+} Territorio;
+
+int main(){
+    territorio territorios[MAX_TERRITORIOS];
+    printf("n===Cadastro de territorios===n")
+    
+}
+
