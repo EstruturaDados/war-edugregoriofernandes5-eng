@@ -115,6 +115,6 @@ typedef struct {
 int main(){
     territorio territorios[MAX_TERRITORIOS];
     printf("n===Cadastro de territorios===n")
-    
+
 }
 
