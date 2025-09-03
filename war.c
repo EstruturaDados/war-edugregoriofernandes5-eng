@@ -96,7 +96,15 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
-Criaçao da struct territorio com suas informações de descrição;
+
+#include <stdio.h>
+
+int main(){
+printf("Desafio War|\n");
+}
+
+
+// Criação da struct Territorio com suas informações de descrição
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -105,16 +113,40 @@ Criaçao da struct territorio com suas informações de descrição;
 #define MAX_NOME 30
 #define MAX_COR 20 
 
-//Estrutura Territorio
+// Estrutura Territorio
 typedef struct {
-    char nome [MAX_NOME];  //Nome do território
-    char corExercito [MAX_COR];  //Cor do exercito que ocupa
-    int tropas; //Quantidade de tropas
+    char nome[MAX_NOME];        // Nome do território
+    char corExercito[MAX_COR];  // Cor do exército que ocupa
+    int tropas;                 // Quantidade de tropas
 } Territorio;
 
-int main(){
-    territorio territorios[MAX_TERRITORIOS];
-    printf("n===Cadastro de territorios===n")
+int main() {
+    Territorio territorios[MAX_TERRITORIOS]; // vetor de territórios
+    printf("\n=== Cadastro de Territórios ===\n\n");
 
+    // Cadastro dos 5 territórios
+    for (int i = 0; i < MAX_TERRITORIOS; i++) {
+        printf("Digite o nome do território %d: ", i + 1);
+        scanf(" %[^\n]", territorios[i].nome);  // lê string com espaços
+
+        printf("Digite a cor do exército do território %d: ", i + 1);
+        scanf(" %[^\n]", territorios[i].corExercito);
+
+        printf("Digite a quantidade de tropas do território %d: ", i + 1);
+        scanf("%d", &territorios[i].tropas);
+
+        printf("\n");
+    }
+
+    // Exibição dos territórios cadastrados
+    printf("\n=== Territórios cadastrados ===\n\n");
+    for (int i = 0; i < MAX_TERRITORIOS; i++) {
+        printf("Território %d:\n", i + 1);
+        printf("Nome: %s\n", territorios[i].nome);
+        printf("Cor do exército: %s\n", territorios[i].corExercito);
+        printf("Quantidade de tropas: %d\n", territorios[i].tropas);
+        printf("---------------------------\n");
+    }
+
+    return 0;
 }
-
