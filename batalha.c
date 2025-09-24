@@ -31,6 +31,8 @@ int main(){
         }
 
         printf("n=== Cadastro de Territórios ===\n\n");
-        
+        for (int i = 0; i < n; i++) {
+            
+        }
 
 
