@@ -112,7 +112,7 @@ printf("Novo commit|\n");
 
 #define MAX_TERRITORIOS 5
 #define MAX_NOME 30
-#define MAX_COR 20 
+#define MAX_COR 10 
 
 // Estrutura Territorio
 typedef struct {
