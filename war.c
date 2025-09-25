@@ -99,11 +99,6 @@ int main() {
 
 #include <stdio.h>
 
-int main(){
-printf("Desafio War|\n");
-printf("Novo commit|\n");
-}
-
 
 // Criação da struct Territorio com suas informações de descrição
 #include <stdio.h>
