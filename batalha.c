@@ -32,7 +32,16 @@ int main(){
 
         printf("n=== Cadastro de Territórios ===\n\n");
         for (int i = 0; i < n; i++) {
-            
+        printf("Digite o nome do território %d: ", i+1);
+        scanf(" %[^\n]", territorios[i].nome);
+        
+        printf("Digite a cor do exército %d: ", i+1);
+        scanf(" %[^\n]", territorios[i].corExercito);
+
+        printf("Digite a quantidade de tropas do território %d; i+1");
+        scanf(%d , &territorios[i].tropas);
+
+        printf("\n");
         }
 
 
