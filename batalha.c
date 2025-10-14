@@ -5,5 +5,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+//Struct que representa um território
+typedef struct {
+    char nome[30];
+    char cor[10]; //cor do exército 
+    int tropas;
+} Territorio;
+
+//Função que irei usar
+void cadastrarTerritorios(Territorio* mapa, int n);
+void exibirTerritorios(Territorio* mapa, int n);
+void atacar(Territorio* atacante, Territorio* defensor);
+void liberarMemoria(Territorio* mapa)
+
 
 
