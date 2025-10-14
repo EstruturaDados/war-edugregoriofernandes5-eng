@@ -19,7 +19,17 @@ typedef struct {
 void cadastrarTerritorios(Territorio* mapa, int n);
 void exibirTerritorios(Territorio* mapa, int n);
 void atacar(Territorio* atacante, Territorio* defensor);
-void liberarMemoria(Territorio* mapa)
+void liberarMemoria(Territorio* mapa);
+
+int main() { 
+    srand(time(NULL)); //Inicializa a aleatoriedade dos dados
+int n;
+printf("Quantos territorios deseja cadastrar? ");
+scanf("%d ,  &n");
+getchar(); //Limpar buffer
+}
+
+
 
 
 
