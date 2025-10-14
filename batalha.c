@@ -27,6 +27,18 @@ int n;
 printf("Quantos territorios deseja cadastrar? ");
 scanf("%d ,  &n");
 getchar(); //Limpar buffer
+
+//Alocação diâmica de territórios
+Territorio* mapa =(Territorio*) calloc(n, sizeof(Territorio*));
+if (mapa == NULL) {
+printf("Erro ao alocar memória!\n");
+return 1;
+}
+
+cadastrarTerritorios(mapa, n);
+int opcao;
+do {
+    
 }
 
 
