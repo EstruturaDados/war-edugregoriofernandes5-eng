@@ -115,7 +115,36 @@ void cadastrarTerritorios(Territorio* mapa, int n) {
         }
     }
 
-    int
+    int dadoAtacante = (rand() % 6) + 1; // de 1 a 6
+    int dadoDefensor = (rand() % 6) + 1;
+
+    printf("\n%s (dado %d) ATACA %s (dado %d)\n", atacante->nome, dadoAtacante, defensor->nome, dadoDefensor);
+   
+    if (dadoAtacante > dadoDefensor) {
+        printf("Ataque bem-sucedido! %s conquista %s!n", atacante->nome, defensor->nome);
+
+        strcpy(defensor->cor, atacante->cor); // muda o dono
+        defensor->tropas = atacante->tropas / 2; //transfere metade das tropas
+        atacante->tropas /=2; // atacante perde metade também
+        } else {
+            printf("Ataque falhou! %s perdeu uma tropa.\n", atacante->nome);
+            atacante->tropas--;
+        }
+
+        printf("\n--- Resultado pos-ataque ---\n");
+        printf("%s | Cor: %s | Tropas; %d\n", atacante->nome, atacnte->cor, atacante->tropas);
+        printf("%s |Cor; %s | Tropas: %d\n", defensor->nome, defensor->cor, defensor->tropas);
+}
+
+// Liberar a memória alocada
+void liberarMemoria(Territorio* mapa) {
+    free(mapa);
+    printf("\nMemoria liberada com sucesso!\n");
+
+}
+
+
+    
 
 
 
