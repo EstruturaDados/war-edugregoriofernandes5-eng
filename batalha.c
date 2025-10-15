@@ -86,9 +86,36 @@ void cadastrarTerritorios(Territorio* mapa, int n) {
             mapa[i].nome[strcspn(mapa[i].nome, "\n")] = '\0'; // remove \n
 
             pirntf("Cor do exercito: ");
-            fgets (mapa[i].cor, 10, stdin)
+            fgets (mapa[i].cor, 10, stdin);
+            mapa[i].cor[strcspn(mapa[i].cor, "\n")] = '\0';
+
+            printf("Numero de tropas: ");
+            scanf("%d", &mapa[i].tropas);
+            getchar();
+
+     }
+
     }
-}
+
+    //Mostar os territórios
+    void exibirTerritorios(Territorio* mapa, int n) {
+        printf("\n--- ESTADO ATUAL DOS TERRITORIOS ---\n");
+        for (int i = 0; i < n; i++){
+            printf("[%d] %s |Cor: %s | Tropas %d\n", i, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
+
+        }
+
+    }
+
+    //Simula um ataque entre dois territórios
+    void atacar(Territorio* atacante, Territorio* defensor {
+        if (atacante->tropas <= 1) {
+            printf("O atacante precisa ter mais de uma tropa para poder atacar!\n");
+            return;
+        }
+    }
+
+    int
 
 
 
