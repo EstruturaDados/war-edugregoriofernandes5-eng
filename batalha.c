@@ -41,7 +41,7 @@ do {
     printf("\n--- MENU WAR ---\n");
     printf("1. Exibir territorios\n");
     printf("2. Atacar territorios\n");
-    pprintf("0. Sair\n");
+    printf("0. Sair\n");
     printf("Escolha: ");
     scanf("%d", &opcao);
     getchar();
