@@ -1,1 +1,28 @@
+/* war_missoes.c
+Implementação das missões estratégicas para um War estruturado.
+Usa malloc, strcpy, ponteiros, modularização, srand/time e libera memória.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define MAX_NOME 30
+#define MAX_COR 10
+#define MAX_MISSAO_LEN 100
+
+/* Estrutura do territorio */
+typedef struct {
+    char nome[MAX_NOME];
+    char cor[MAX_COR]; /* cor/dono do territorio */
+    int tropas;
+} Territorio;
+
+/* Estrutura de jogador */
+typedef struct {
+    char cor[MAX_COR];
+    char *missao; /*armazenada dinamicamente*/
+} Jogador;
+
 
