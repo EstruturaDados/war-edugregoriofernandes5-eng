@@ -33,4 +33,47 @@ void atacar(Territorio* atacante, Territorio* defensor);
 void exibir Mapa(Territorio* mapa, int tamanho);
 void liberarMemoria(Territorio* mapa, int tamanho, Jogador* jogadores, int totalJogadores);
 
+/* --- Implementações ---- */
+/*Sorteia uma missao do vetor missoes e copia para destino (destino deve ser buffer alocado). */
+void atribuirMissao(char* destino, char* missoes[], int totalMissoes) {
+    ind idx = rand() % totalMissoes;
+    strcpy(destino , missoes[idx]);
+}
+
+/* Exibe a missão - passagem por "valor" no sentindo de usar const char* (não altera). */
+void exibirMissao(const char* missao){
+    printf(" >>> Missao do jogador:  %s\n, missao");
+}
+
+/*Verifica se a missão foi cumprida.
+A lógica procura palavras-chave na string da missão e aplica uma regra simples.
+Recebe corJogador para saber "dono" dos territorios.
+Retorna 1 se cumprida, 0 caso contrário.
+ */
+int verificarMissao(const char* missao, Territorio* mapa, int tamanho, const char* corJogador) {
+    /*Contadores úteis*/
+    int totalDoJogador = 0;
+    int totalTropasAdversario =0;
+    int maiorConsecutivos =0;
+}
+
+/*calcula contagens */
+for (int i  = 0; i < tamanho; ++i) {
+    if ( strcpm(mapa[i].cor, corJogador) == 0) {
+        totalDoJogador++;
+        atualConsecutivos++;
+    } else {
+        if (atualConsecutivos >maiorConsecutivos)
+        maiorConsecutivos = atualConsecutivos;
+        atualConsecutivos = 0;
+        totalTropasAdversario += mapa[i].tropas;
+    }
+}
+if (atualConsecutivos > maior Consecutivos) maiorConsecutivos = atualConsecutivos;
+
+/* Regras simples baseadas em palavras-chaves contidas em missao*/
+if
+
+
+
 
