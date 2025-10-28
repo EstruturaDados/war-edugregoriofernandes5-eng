@@ -72,7 +72,11 @@ for (int i  = 0; i < tamanho; ++i) {
 if (atualConsecutivos > maior Consecutivos) maiorConsecutivos = atualConsecutivos;
 
 /* Regras simples baseadas em palavras-chaves contidas em missao*/
-if
+if (strstr(misao, "3 territorios consecutivos") != NULL) {
+    return (maiorConsecutivos >= 3) ? 1 : 0;
+    } else if (strstr(missao, "5 territorios") != NULL) {
+        return (totalDOJogador >= 5) ? 1 : 0;
+    } else if
 
 
 
