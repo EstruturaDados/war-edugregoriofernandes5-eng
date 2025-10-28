@@ -25,4 +25,12 @@ typedef struct {
     char *missao; /*armazenada dinamicamente*/
 } Jogador;
 
+/* --- Assinatura de funções --- */
+void atribuirMissao(char* destino, char* missoes[], int totalMissoes);
+int verificarMissao (const char* missao, territorio* mapa, int tamanho, const char* corJogador);
+void exibirMissao(const char* missao); /*passada por valor (ponteiro para const) */
+void atacar(Territorio* atacante, Territorio* defensor);
+void exibir Mapa(Territorio* mapa, int tamanho);
+void liberarMemoria(Territorio* mapa, int tamanho, Jogador* jogadores, int totalJogadores);
+
 
