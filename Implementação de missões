@@ -109,6 +109,8 @@ int rollD = (rand () % 6) + 1;
 printf (" %s (cor %s, tropas %d) ataca %s (cor %s, tropas %d) -> dados: %d x %d\n",
     atacante ->nome, atacante ->cor, defensor ->tropas, rollA, rollD);
 
+    
+
 
 
 
