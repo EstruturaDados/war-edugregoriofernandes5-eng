@@ -72,11 +72,43 @@ for (int i  = 0; i < tamanho; ++i) {
 if (atualConsecutivos > maior Consecutivos) maiorConsecutivos = atualConsecutivos;
 
 /* Regras simples baseadas em palavras-chaves contidas em missao*/
-if (strstr(misao, "3 territorios consecutivos") != NULL) {
+if (strstr(missao, "3 territorios consecutivos") != NULL) {
     return (maiorConsecutivos >= 3) ? 1 : 0;
     } else if (strstr(missao, "5 territorios") != NULL) {
         return (totalDOJogador >= 5) ? 1 : 0;
-    } else if
+    } else if (strstr(missao, "eliminar todas as tropas do adversario") != NULL) {
+        /* adversário sem tropas no mapa */
+        return (totalTropasAdversario == 0) ? 1 : 0;
+    } else if (strstr(missao, "mais da metade") != NULL){
+        return (totaldoJogador > (tamanho / 2)) ? 1 : 0;
+    } else if (strstr(missao, "possuir 2 territorios") != NULL) {
+        return (totalDoJogador >= 2) ? 1 : 0;
+    }
+
+    /* padrão: missão não reconhecida -> não cumprida */
+    return 0;
+}
+
+/* Simula um ataque: rolagem entre 1 e 6 para atacante e defensor.
+Se atacante vence, transfere metade das tropas do atacnte para defensor e atualiza a cor do defensor; caso contrário, atacante perde 1 tropa.
+Valida ataques (não atacar território com mesma cor e precissa de perder tropas > 1)
+*/
+void atacar(Territorio* atacante, Territorio* defensor) {
+    if (atacante == NULL || defensor == NULL) return;
+    if (strcmp(atacante ->cor, defensor->cor) == 0){
+        printf("Ataque inválido: mesmos donos (%s).\n, atacante->cor");
+        return;
+    }
+    if (atacante ->tropas <= 1) {
+        printf("Ataque inválido: atacante (%s) nao tem tropas suficientes.\n", atacante->nome);
+        return;
+    }
+int rollA = (rand() % 6) + 1;
+int rollD = (rand () % 6) + 1;
+
+printf (" %s (cor %s, tropas %d) ataca %s (cor %s, tropas %d) -> dados: %d x %d\n",
+    atacante ->nome, atacante ->cor, defensor ->tropas, rollA, rollD);
+
 
 
 
