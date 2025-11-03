@@ -109,6 +109,185 @@ int rollD = (rand () % 6) + 1;
 printf (" %s (cor %s, tropas %d) ataca %s (cor %s, tropas %d) -> dados: %d x %d\n",
     atacante ->nome, atacante ->cor, defensor ->tropas, rollA, rollD);
 
+    if (rollA > rollD) {
+        int transfer = atacante->tropas / 2; /*metade das tropas transferidas*/
+        if (transfer <=0) transfer = 1;
+        /*defender recebe as tropas transferidas e passa a ter a cor do atacante*/
+        defensor->tropas +=transfer;
+        atacante->tropas -=transfer;
+        strcpy(defensor->cor, atacante->cor);
+        printf(" Vitoria do atacante! %d tropas transferidas. %s agora e' da cor %s\n",
+            transfer, defensor->nome, defensor->cor);
+    } else {
+        atacante->tropas -=1;
+        if (atacante->tropas < 0) atacante->tropas = 0
+        printf(" Defensor resistiu! Atacante perde 1 tropa. Atacante agora tem %d tropas\n",
+            atacante->tropas);
+    }
+}
+/* Exibe o mapa atual */
+void exibirMapa(Territorio* mapa, int tamanho) {
+    printf("=== Mapa atual ===\n");
+    for (int i = 0; i < tamanho; ++i) {
+        printf(" %2d: %s | Cor: %s | Tropas: %d\n", i, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
+    }
+    printf("==================\n");
+}
+
+/* Libera memória alocada dinamicamente. */
+void liberarMemoria(Territorio* mapa, int tamanho, Jogador* jogadores, int totalJogadores) {
+    (void)tamanho; /* mapa é um bloco alocado; só um free é necessário aqui */
+    if (mapa) free(mapa);
+
+    if (jogadores) {
+        for (int i = 0; i < totalJogadores; ++i) {
+            if (jogadores[i].missao) {
+                free(jogadores[i].missao);
+            }
+        }
+        free(jogadores);
+    }
+}
+
+/* --- Função principal --- */
+int main() {
+    srand((unsigned int)time(NULL));
+
+    /* Configurações iniciais */
+    const int numTerritorios = 10;
+    const int numJogadores = 2;
+
+    /* Aloca mapa dinamicamente */
+    Territorio* mapa = (Territorio*) calloc(numTerritorios, sizeof(Territorio));
+    if (!mapa) {
+        fprintf(stderr, "Falha ao alocar mapa\n");
+        return 1;
+    }
+
+    /* Inicializa nomes e valores iniciais do mapa */
+    for (int i = 0; i < numTerritorios; ++i) {
+        snprintf(mapa[i].nome, MAX_NOME, "T%d", i+1);
+        mapa[i].tropas = (rand() % 5) + 1; /* 1 a 5 tropas */
+        /* atribui donos iniciais alternando cores entre jogadores */
+        if (i % 2 == 0) strcpy(mapa[i].cor, "Vermelho");
+        else strcpy(mapa[i].cor, "Azul");
+    }
+
+    /* Cria jogadores */
+    Jogador* jogadores = (Jogador*) malloc(numJogadores * sizeof(Jogador));
+    if (!jogadores) {
+        fprintf(stderr, "Falha ao alocar jogadores\n");
+        free(mapa);
+        return 1;
+    }
+    strcpy(jogadores[0].cor, "Vermelho");
+    strcpy(jogadores[1].cor, "Azul");
+    jogadores[0].missao = NULL;
+    jogadores[1].missao = NULL;
+
+    /* Conjunto de missoes possíveis */
+    char* missoesPossiveis[] = {
+        "Possuir 3 territorios consecutivos",
+        "Possuir 5 territorios",
+        "Eliminar todas as tropas do adversario",
+        "Possuir mais da metade dos territorios",
+        "Possuir 2 territorios"
+    };
+    int totalMissoes = sizeof(missoesPossiveis) / sizeof(missoesPossiveis[0]);
+
+    /* Aloca e atribui missão para cada jogador (armazenada dinamicamente) */
+    for (int i = 0; i < numJogadores; ++i) {
+        jogadores[i].missao = (char*) malloc(MAX_MISSAO_LEN * sizeof(char));
+        if (!jogadores[i].missao) {
+            fprintf(stderr, "Falha ao alocar missao para jogador %d\n", i);
+            liberarMemoria(mapa, numTerritorios, jogadores, numJogadores);
+            return 1;
+        }
+        atribuirMissao(jogadores[i].missao, missoesPossiveis, totalMissoes);
+    }
+
+    /* Exibe missão apenas uma vez no começo para cada jogador */
+    printf("=== Iniciando jogo: missoes atribuídas ===\n");
+    for (int i = 0; i < numJogadores; ++i) {
+        printf("Jogador %d (cor %s):\n", i+1, jogadores[i].cor);
+        exibirMissao(jogadores[i].missao);
+        printf("\n");
+    }
+
+    /* Loop simples de jogo: cada turno um jogador tenta um ataque aleatório.
+       Ao final de cada turno verificamos se cumpriu sua missão. */
+    int turno = 0;
+    int vencedor = -1;
+    int maxTurnos = 200; /* para evitar loop infinito em exemplo */
+
+    for (int t = 0; t < maxTurnos && vencedor == -1; ++t) {
+        int jogadorAtu = turno % numJogadores;
+        int jogadorOponente = (turno + 1) % numJogadores;
+
+        printf("\n--- Turno %d: Jogador %d (cor %s) ---\n", t+1, jogadorAtu+1, jogadores[jogadorAtu].cor);
+        exibirMapa(mapa, numTerritorios);
+
+        /* tenta selecionar um território atacante do jogador atual com tropas > 1 */
+        int idxAtac = -1;
+        for (int i = 0; i < numTerritorios; ++i) {
+            if (strcmp(mapa[i].cor, jogadores[jogadorAtu].cor) == 0 && mapa[i].tropas > 1) {
+                idxAtac = i;
+                break;
+            }
+        }
+
+        if (idxAtac == -1) {
+            printf("Jogador %d nao possui territórios com tropas suficientes para atacar.\n", jogadorAtu+1);
+        } else {
+            /* seleciona um defensor aleatório que não seja da mesma cor */
+            int idxDef = -1;
+            int tentativas = 0;
+            while (tentativas < 50) {
+                int cand = rand() % numTerritorios;
+                if (strcmp(mapa[cand].cor, jogadores[jogadorAtu].cor) != 0) {
+                    idxDef = cand;
+                    break;
+                }
+                tentativas++;
+            }
+            if (idxDef == -1) {
+                printf("Nao encontrou alvo adversario para atacar.\n");
+            } else {
+                atacar(&mapa[idxAtac], &mapa[idxDef]);
+            }
+        }
+
+        /* Verifica missão do jogador atual silenciosamente */
+        if (verificarMissao(jogadores[jogadorAtu].missao, mapa, numTerritorios, jogadores[jogadorAtu].cor)) {
+            vencedor = jogadorAtu;
+            printf("\n*** Jogador %d (cor %s) cumpriu sua missao: %s ***\n",
+                   jogadorAtu+1, jogadores[jogadorAtu].cor, jogadores[jogadorAtu].missao);
+            break;
+        }
+
+        /* Também (opcional) verificar a missão do outro jogador (no enunciado: verificar ao final de cada turno) */
+        if (verificarMissao(jogadores[jogadorOponente].missao, mapa, numTerritorios, jogadores[jogadorOponente].cor)) {
+            vencedor = jogadorOponente;
+            printf("\n*** Jogador %d (cor %s) cumpriu sua missao: %s ***\n",
+                   jogadorOponente+1, jogadores[jogadorOponente].cor, jogadores[jogadorOponente].missao);
+            break;
+        }
+
+        turno++;
+    }
+
+    if (vencedor == -1) {
+        printf("\nFim de jogo: ninguem cumpriu a missao no limite de turnos.\n");
+    } else {
+        printf("\nVencedor final: Jogador %d (cor %s)\n", vencedor+1, jogadores[vencedor].cor);
+    }
+
+    /* libera memoria alocada */
+    liberarMemoria(mapa, numTerritorios, jogadores, numJogadores);
+
+    return 0;
+}
+
     
 
 
